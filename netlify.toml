@@ -1,0 +1,15 @@
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[build]
+  publish = "static"
+  
+[build.environment]
+  # No build step needed for static site
+  
+# Note: After deployment, you'll need to:
+# 1. Get your Railway backend URL
+# 2. Update static/config.js with your Railway URL
+# 3. Redeploy to Netlify

@@ -1,0 +1,11 @@
+PyPDF2
+sentence-transformers
+numpy
+faiss-cpu
+groq
+python-dotenv
+fastapi
+uvicorn
+python-multipart
+pickle-mixin
+pinecone

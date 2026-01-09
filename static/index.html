@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Rag</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h1>Mini Rag</h1>
+                <p>Powered by Pinecone + Groq</p>
+            </div>
+
+            <div class="upload-section">
+                <h3>Documents</h3>
+                <div class="file-drop-area" id="drop-area">
+                    <span class="icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="12" y1="18" x2="12" y2="12"></line>
+                            <line x1="9" y1="15" x2="15" y2="15"></line>
+                        </svg>
+                    </span>
+                    <span class="file-msg">Drag & Drop PDFs here or click to upload</span>
+                    <input class="file-input" type="file" id="fileElem" multiple accept="application/pdf">
+                </div>
+                <button id="process-btn" class="primary-btn" disabled>Process Documents</button>
+                <div id="upload-status" class="status-msg"></div>
+            </div>
+
+            <div class="context-list">
+                <h3>Active Files</h3>
+                <ul id="file-list">
+                    <li class="empty-state">No files processed</li>
+                </ul>
+            </div>
+
+            <div class="sidebar-footer">
+                <button id="clear-btn" class="secondary-btn">Clear Knowledge Base</button>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-area">
+            <div class="chat-header">
+                <h2>Conversation</h2>
+                <div class="header-right">
+                    <div class="stats-box" id="stats-box" style="display: none;">
+                        <span id="time-taken">Time: 0s</span>
+                        <span class="divider">|</span>
+                        <span id="cost-est">Est. Cost: $0.00</span>
+                    </div>
+                </div>
+                <div class="status-indicator">
+                    <span class="dot"></span>
+                    <span id="system-status">System Ready</span>
+                </div>
+            </div>
+
+            <div class="messages-container" id="messages">
+                <div class="message system">
+                    <div class="avatar">AI</div>
+                    <div class="content">
+                        Hello! Upload your PDF documents on the left to get started. I can answer questions based on the
+                        content you provide.
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <textarea id="user-input" placeholder="Ask a question about your documents..." rows="1"></textarea>
+                    <button id="send-btn" class="send-btn">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Citations Panel (Hidden by default) -->
+        <aside class="citations-panel" id="citations-panel">
+            <div class="citations-header">
+                <h3>Sources / Citations</h3>
+                <button class="close-btn" id="close-citations">&times;</button>
+            </div>
+            <div class="citations-content" id="citations-content">
+                <!-- Citations will be injected here -->
+            </div>
+        </aside>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

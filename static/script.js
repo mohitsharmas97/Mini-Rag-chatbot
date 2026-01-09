@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         try {
-            const response = await fetch('/api/upload', {
+            const response = await fetch(`${API_CONFIG.baseURL}/api/upload`, {
                 method: 'POST',
                 body: formData
             });
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function updateFileList() {
         try {
-            const response = await fetch('/api/status');
+            const response = await fetch(`${API_CONFIG.baseURL}/api/status`);
             const data = await response.json();
 
             fileList.innerHTML = '';
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const loadingId = addLoadingMessage();
 
         try {
-            const response = await fetch('/api/ask', {
+            const response = await fetch(`${API_CONFIG.baseURL}/api/ask`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Clear & Init ---
     clearBtn.addEventListener('click', async () => {
         if (confirm("Are you sure you want to clear the knowledge base?")) {
-            await fetch('/api/clear', { method: 'POST' });
+            await fetch(`${API_CONFIG.baseURL}/api/clear`, { method: 'POST' });
             updateFileList();
             messagesContainer.innerHTML = ''; // Start fresh
             addMessage("Memory cleared.", 'system');

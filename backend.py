@@ -20,10 +20,25 @@ load_dotenv()
 
 app = FastAPI()
 
-# Enable CORS
+# Enable CORS - Configure for production deployment
+# Update NETLIFY_URL after deploying frontend to Netlify
+NETLIFY_URL = os.getenv("NETLIFY_URL", "")
+allowed_origins = [
+    "http://localhost:3000",
+    "http://localhost:8000",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:8000",
+]
+
+if NETLIFY_URL:
+    allowed_origins.append(NETLIFY_URL)
+else:
+    # Allow all origins in development if NETLIFY_URL not set
+    allowed_origins = ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -311,7 +326,19 @@ async def get_status():
         "files": ["Pinecone Index: " + PINECONE_INDEX_NAME] if connected else []
     }
 
-app.mount("/", StaticFiles(directory="static", html=True), name="static")
+@app.get("/")
+async def root():
+    return {
+        "message": "Mini RAG Chatbot API",
+        "status": "running",
+        "endpoints": {
+            "upload": "/api/upload",
+            "ask": "/api/ask",
+            "status": "/api/status",
+            "clear": "/api/clear"
+        }
+    }
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)

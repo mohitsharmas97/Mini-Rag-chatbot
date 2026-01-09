@@ -1,11 +1,11 @@
-PyPDF2
-sentence-transformers
-numpy
-faiss-cpu
-groq
-python-dotenv
+--extra-index-url https://download.pytorch.org/whl/cpu
+
 fastapi
 uvicorn
 python-multipart
-pickle-mixin
-pinecone
+python-dotenv
+groq
+pinecone-client>=3.0.0
+PyPDF2
+numpy
+sentence-transformers

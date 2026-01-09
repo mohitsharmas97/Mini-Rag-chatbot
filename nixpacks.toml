@@ -1,8 +1,8 @@
 [phases.setup]
-nixPkgs = ["python311", "gcc", "g++", "cmake", "openblas"]
+nixPkgs = ['python311', 'gcc', 'cmake', 'openblas']
 
 [phases.install]
-cmds = ["pip install -r requirements.txt"]
+cmds = ['pip install -r requirements.txt']
 
 [start]
-cmd = "uvicorn backend:app --host 0.0.0.0 --port $PORT"
+cmd = 'uvicorn backend:app --host 0.0.0.0 --port $PORT'

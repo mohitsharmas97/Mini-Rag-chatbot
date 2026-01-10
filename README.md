@@ -1,12 +1,13 @@
 # Mini Rag
 
-A highly responsive and visually engaging Retrieval-Augmented Generation (RAG) application that allows users to chat with their PDF documents. The system uses **FastAPI** for the backend, **Groq (Llama 3.3)** for the LLM, **Pinecone** for serverless cloud vector search, and a **Cross-Encoder Reranker** for improved retrieval accuracy.
+A highly responsive and visually engaging Retrieval-Augmented Generation (RAG) application that allows users to chat with their PDF documents. The system uses **Flask** for the backend, **Groq (Llama 3.3)** for the LLM, **Pinecone** for serverless cloud vector search, and a **Cross-Encoder Reranker** for improved retrieval accuracy.
+![alt text](image.png)
 
 ## Architecture
 
 ```mermaid
 graph TD
-    User[User / Frontend] -->|Upload PDF| API[FastAPI Backend]
+    User[User / Frontend] -->|Upload PDF| API[Flask Backend]
     User -->|Ask Question| API
     
     subgraph "Processing Pipeline"
@@ -42,19 +43,35 @@ graph TD
 
 | Component | Technology |
 |-----------|------------|
-| Backend | Python, FastAPI, Uvicorn |
+| Backend | Python, Flask |
 | Frontend | HTML5, CSS3, Vanilla JavaScript |
 | Vector DB | Pinecone (Serverless) |
 | Embeddings | Sentence Transformers |
 | Reranker | Cross-Encoder |
 | LLM | Groq Cloud (Llama 3.3) |
 
+## Project Structure
+
+```
+Mini-Rag-chatbot/
+├── app.py                  # Flask backend server
+├── requirements.txt        # Python dependencies
+├── .env                    # Environment variables (API keys)
+├── .gitignore             # Git ignore rules
+├── static/                # Frontend files
+│   ├── index.html         # Main HTML interface
+│   ├── styles.css         # Styling (dark theme)
+│   ├── script.js          # Frontend logic
+│   └── config.js          # API configuration
+└── README.md              # This file
+```
+
 ## Installation and Setup
 
 1. **Clone the repository**:
    ```bash
    git clone <repository-url>
-   cd rag_chatbot_usingPDF-main
+   cd Mini-Rag-chatbot
    ```
 
 2. **Create a virtual environment** (recommended):
@@ -82,14 +99,14 @@ graph TD
 
 ## How to Run
 
-1. Start the FastAPI server:
+1. Start the Flask server:
    ```bash
-   uvicorn backend:app --reload
+   python app.py
    ```
 
 2. Open your browser and navigate to:
    ```
-   http://localhost:8000
+   http://localhost:5000
    ```
 
 3. Upload a PDF to trigger indexing in Pinecone, then ask questions about your documents.
@@ -129,10 +146,39 @@ graph TD
 
 ## Troubleshooting
 
+### Server Issues
+
 **Server crashes immediately after starting:**
 - Check if port 8000 is already in use: `netstat -ano | findstr :8000`
 - Kill existing processes: `taskkill /F /IM python.exe`
+- Try a different port: `uvicorn backend:app --reload --port 8001`
 
 **API Key errors:**
 - Ensure `.env` file exists in the root directory
 - Check that API keys have no extra whitespace or line breaks
+- Verify API keys are valid and active
+
+### Frontend Issues
+
+**Cannot connect to backend:**
+- Ensure Flask server is running on port 5000
+- Check `static/config.js` has the correct `baseURL`
+- Verify CORS is enabled in `app.py`
+
+**Files not uploading:**
+- Check file size (large PDFs may take time)
+- Ensure files are valid PDFs
+- Check browser console for errors
+
+### Pinecone Issues
+
+**Index not found:**
+- Create index manually in Pinecone console
+- Name: `mini-rag-index`
+- Dimensions: 384
+- Metric: Cosine
+- Cloud: AWS, Region: us-east-1
+
+## License
+
+This project is open source and available under the MIT License.
